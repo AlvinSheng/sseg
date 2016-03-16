@@ -1,0 +1,17 @@
+Package: sseg
+Type: Package
+Title: Compute various multitype-summaries for multitype point patterns
+Version: 0.1
+Date: 2016-03-08
+Author: Tuomas Rajala
+Maintainer: Tuomas Rajala <tuomas.rajala@iki.fi>
+Description: Compute homogeneous and inhomogeneous ISAR, Dixon's test.
+License: GPL
+LazyData: TRUE
+Imports:
+    Rcpp (>= 0.12.3)
+LinkingTo: Rcpp
+RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

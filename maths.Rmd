@@ -1,0 +1,98 @@
+---
+title: "Maths for multitype point pattern summaries"
+author: "Tuomas Rajala"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+\newcommand{\R}{{\bf R}}
+\newcommand{\P}{{\bf P}}
+\newcommand{\E}{{\bf E}}
+\newcommand{\x}{{\bf x}}
+\newcommand{\simr}{\stackrel{r}{\sim}}
+# Multitype point pattern
+
+Feel free to replace "species" in the place of "type" in the following.
+
+Write $X=(X_1, ..., X_S)$ for the multi-type point pattern where each component $X_i$ is a univariate point pattern, $i=1,...,S$, and $S$ is the number of types. We assume each component (and therefore the joint) pattern is observed in an observation window $W\in \R^d$. 
+
+For $X$ with $S$ components, write $t(x)$ for the type of point $x\in X$. Then we can write equivalently to the above that $X=\{(x,t(x))\in W\times \{1,...,S\}\}$.
+
+# Intensity
+
+Write $X_i(A):=\#\{X_i\cap A\}$ for the number of points of $X_i$ that are in some bounded set $A\subset\R^d$. We assume the each component process $X_i$ fulfills
+
+$$\E X_i(A) := \int_A \lambda_i(x)dx$$
+
+were $\lambda_i(x)\ge 0$ is called the *intensity function*. The total intensity of $X$ is $\lambda(x) := \lambda_X(x) = \sum_i \lambda_i(x)$.
+
+The process $X_i$ is called *stationary* if $X_i$ and $X_i+x$ for any $x$ have the same distribution. For stationary processes the intensity is a constant, $\lambda_i(x)\equiv\lambda_i>0$ for all $x$.
+
+The multi-type process $X$ is called stationary if all its components are stationary. 
+
+Write also $p_i(u)=\lambda_i(u)/\lambda(u)$ for the relative intensities.
+
+# Individual species-area-relationship ISAR
+
+## The original ISAR
+
+Assuming $X$ is stationary, the original definition of ISAR by @Wiegand2007 can be written as
+
+\[I_i(r) := \E_{o,i}\sum_{j\neq i}1(X_j(b(o,r))>0) \]
+
+where $b(o,r)$ is the origin-center disc of radius $r$, and the expectation is over the distribution of $X_i$ conditional on the event $\{o\in X_i\}$. Heuristically, $I_i(r)$ is the expected count of other types inside a disc of radius $r$ around a typical member of type $i$. Two other forms are handy:
+
+\[I_i(r)=\sum_{j\neq i} [1-\P_{o,i}(X_j(b(o,r))=0)] = \sum_{j\neq i} D_{ij}(r)\]
+
+where $D_{ij}(r)$ is the nearest neighbour distance distribution function from type $i$ to type $j$. The estimator for ISAR is given by the estimators of $D_{ij}'s$, implemented as the function `Gcross` in `spatstat`.
+
+## Inhomogeneous ISAR
+
+Assume that for each $i=1,...,S$ the sub-processes $X_i$ have a locally finite intensity function $\lambda_i(u), u\in W$ which is bounded away from zero such that $\inf \lambda_i(u) = \bar\lambda_i > 0$. Assume further that $X_i$ are intensity-reweighted moment stationary point processes, that is to say all factorial moment measures are translation invariant.
+
+We can then define the *inhomogeneous ISAR* (*iISAR*) as
+
+\[I_i(r) := \sum_{j\neq i}[1-\P_{o,i}(X_j(b(o,r))=0)]\]
+
+where we use
+
+$$\P_{o,i}(X_j(b(o,r))=E_{o,i}\prod_{x\in X_j}\left[1-\frac{\bar\lambda 1(x \in b(o,r))}{\lambda(x)} \right]$$
+
+The border corrected estimator is given by
+
+$$\hat D_{ij}(r) = \frac{1}{\x_i(\cap W_r)}\sum_{x\in \x_i\cap W_r}\prod_{y\in \x_j\cap b(x,r)\cap W}\left[1-\frac{\bar\lambda_j}{\lambda_j(y)}\right]$$
+
+where $W_r=W\ominus b(o,r)$ is the eroded window.
+
+Note that ISAR is a special case of iISAR with constant intensities per type.
+
+# Mingling index
+
+## Original Mingling index
+Define a graph $G(X,r)$ with nodes $X$ and neighbourhood relation $x\simr y$ parameterised by $r$. Two main examples are the *geometric graph*, where $x\simr y \Leftrightarrow ||x-y||<r$ and $r>0$, and the $r$-nearest neighbours with $r=1,2,...$.
+
+For stationary $X$ we define the *mingling index* version 1
+
+$$M^1(r) := \frac{\E_o\sum_{x\in X_{t(o)}}  1[t(o)\neq t(x)] 1[o\simr x]}{\E_o\sum_{x\in X}1[o\simr x]} = 1- \frac{\E_o\sum_{x\in X_{t(o)}} 1[o\simr x]}{\E_o\sum_{x\in X}1[o\simr x]} $$
+
+and version 2
+
+$$M^2(r) := \E_o\frac{\sum_{x\in X} 1[t(o)\neq t(x)]1[o\simr x]}{\sum_{x\in X}1[o\simr x]}
+= 1-  \E_o\frac{\sum_{x\in X_{t(o)}}1[o\simr x]}{\sum_{x\in X}1[o\simr x]}$$
+
+for $r$-nearest neighbour the version are equal since the denominator equals $r$.
+
+Heuristically, the mingling index computes the fraction of neighbours that are of different type than the focal individual.
+
+We define the *type-wise mingling index* version 1
+
+$$M^1_i(r) := 1- \frac{\E_{o,i}\sum_{x\in X_{i}} 1[o\simr x]}{\E_{o,i}\sum_{x\in X}1[o\simr x]} $$
+
+and version 2
+
+$$M^2_i(r) := 1-  \E_{o,i}\frac{\sum_{x\in X_i}1[o\simr x]}{\sum_{x\in X}1[o\simr x]}$$
+
+
+
+
+
