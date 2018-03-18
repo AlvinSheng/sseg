@@ -68,7 +68,7 @@ NumericVector Dinhom_pair_2_c(int from, int to,
   int i, j, ri;
   NumericVector li;
   NumericVector ww(nr);
-  IntegerVector nn(nr);
+  NumericVector nn(nr);
   // defaults
   for(i = 0; i < nr; i++) {ww(i) = 1; nn(i)=0;}
 //   NumericVector rho0(nmarks);
@@ -93,8 +93,8 @@ NumericVector Dinhom_pair_2_c(int from, int to,
       }
       for(ri = 0; ri < nr; ri++){
         if(bdist(i) > r(ri)){
-          nn(ri)++;
-          if(n>0) out(ri) += ww(ri);
+          nn(ri) += 1/lambda(i);
+          if(n>0) out(ri) += ww(ri) / lambda(i);
         }
         ww(ri) = 1; // reset for next i
       }

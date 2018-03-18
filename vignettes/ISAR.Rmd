@@ -29,36 +29,40 @@ plot(xl, cex=.4, main="")
 ```
 
 # Intensity
+
 To compute the inhomogeneous ISAR we need to estimate the intensity per point per type. We can estimate the intensities using kernel smoothing. The bandwidth needs to be chosen, and one criteria is to minimize
-$$L(h)=(\sum_{x\in X_i}\frac{1}{\lambda_i(x; h)}-|W|)^2$$
+\[
+L(h)=(\sum_{x\in X_i}\frac{1}{\lambda_i(x; h)}-|W|)^2
+\]
 To do this for each pattern there is a wrapper:
 
 ```{r, fig.width=6, fig.height=5}
 A <- intensity_optimal(lansing, verb = T)
 print(summary(A))
-par(mfrow=c(2,3))
-plot(A, i=1:6, type="l", log="y")
+#par(mfrow=c(2,3))
+#plot(A, i=1:6, type="l", log="y")
 ```
 
 And to see the intensity estimates
 
 ```{r, fig.width=8, fig.height=5}
-ims <- density_ppplist(xl, sigma = A$bandwidth)
+ims <- density_ppplist(xl, sigmas = A$bandwidth)
 plot(ims, equal.ribbon = F)
 ```
 
 # ISAR
-Now let's compute the ISAR values. We need to specify a target type. A function `ISAR` computes both homogeneous and inhomogeneous, depending whether we specify the parameter `intensity`. Here's and example of homogeneous ISAR:
+
+Now let's compute the ISAR values. We need to specify a target type. A function `ISAR` computes both homogeneous and inhomogeneous, depending whether we specify the parameter `intensity`. Here's an example of homogeneous ISAR:
 
 ```{r}
 I <- ISAR(lansing, "hickory", CSR=TRUE)
 plot(I)
 ```
 
-Since the pattern of hickories seem clustered,
+Since the pattern of hickories seem clustered on large scales,
 
 ```{r}
-Lh <- Linhom(xl[["hickory"]], ims[["hickory"]], correction = "trans")
+Lh <- Lest(xl[["hickory"]], correction = "trans")
 plot(Lh, .-r~r)
 ```
 
@@ -67,8 +71,8 @@ there are a lot of same types around for ISAR, so we get less alien types than w
 
 ```{r}
 Il <- lapply(names(xl), ISAR, x=lansing)
-ISAR <- do.call(cbind, Il)
-plot(ISAR)
+isar <- do.call(cbind, Il)
+plot(isar)
 ```
 
 And then the inhomogeneous ones:
@@ -95,5 +99,19 @@ plot(difference)
 abline(h=0)
 ```
 
-We see that most of the homogeneous values are higher that inhomogeneous values.
+We see that most of the homogeneous values are higher that inhomogeneous values. This implies that the segregation can be somewhat explained possibly by different environmental preferences. 
+
+# Testing
+
+Focus on the Hickories. We study are the Hickories particularly aversive of other species using a Monte Carlo test. 
+
+```{r}
+env1 <- envelope(lansing, fun = function(x, ...) ISAR(x, "hickory"),
+         simulate = expression(rshift(lansing)), savefuns = TRUE )
+plot(env1, xlim = c(0,0.05))
+```
+
+
+
+
 

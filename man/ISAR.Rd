@@ -2,7 +2,7 @@
 % Please edit documentation in R/ISAR.R
 \name{ISAR}
 \alias{ISAR}
-\title{Homogeneous ISAR}
+\title{Individual Special Area Relationship}
 \usage{
 ISAR(x, i, r, intensity, CSR = FALSE)
 }
@@ -18,7 +18,7 @@ ISAR(x, i, r, intensity, CSR = FALSE)
 \item{CSR}{Include CSR? Only for homogeneous case.}
 }
 \description{
-Homogeneous ISAR
+Estimate the ISAR statistic for a multitype point pattern.
 }
 \details{
 This function computes the ISAR function. The default action
@@ -27,21 +27,20 @@ are homogeneous (intensity is constant).
 
 For inhomogeneous computation the \code{intensity} can be given. It should be
 a vector giving the type-wise intensity at each point, or a list of im-objects giving the
-intensity fields per mark. See \code{density.ppp} or \code{density_pplist} how to generate one.
+intensity fields per mark. See \code{density.ppp} how to compute the density for indivial patterns, or \code{intensity_multi} for a handy wrapper for generating the vector.
 
-CSR is not usually a good hypothesis: It assumes everything is homogeneous Poisson and independent.
+Note that CSR is not usually a good hypothesis: It assumes each marginal type is homogeneous Poisson in addition to type-to-type independence.
 }
 \examples{
-data(lansing, package = "spatstat")
+data(lansing, package = "spatstat.data")
 # inhomogeneous
 i1 <- ISAR(lansing, i = "hickory")
 l <- intensity_optimal(lansing)
 i2 <- ISAR(lansing, i = "hickory", intensity = l$intensity)
 plot(i1)
-lines(i2)
+lines(i2, col=2)
 
 }
 \seealso{
 \code{\link{intensity_optimal}}
 }
-

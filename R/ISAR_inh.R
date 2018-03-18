@@ -3,15 +3,18 @@
 #' @param x Point pattern
 #' @param i Target species
 #' @param r r vector
-#' @param Intensity Intensity lambda_m(x) at each point (x,m)
+#' @param intensity Intensity lambda_m(x) at each point (x,m)
+#' @param lambda same as intensity
+#' @param ...
 #'
 #' @export
 
-ISAR_inhom <- function(x, i, r, intensity){
+ISAR_inhom <- function(x, i, r, intensity, lambda = intensity, ...){
   m <- parse_marks(x)
   mi <- as.integer(m)
   marknames <- levels(m)
   nm <- length(unique(mi))
+  if(missing(intensity)) intensity <- lambda
   if(nm<2) stop("x needs to be at least bivariate.")
 
   # range

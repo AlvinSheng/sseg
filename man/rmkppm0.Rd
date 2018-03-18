@@ -11,4 +11,3 @@ rmkppm0(rho, kappa, omega, win = owin(), clusters = NULL, nsim = 1,
 \description{
 Simulation of the independent components SNC as given by the author
 }
-

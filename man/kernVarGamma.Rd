@@ -9,4 +9,3 @@ kernVarGamma(r, omega, nu.ker)
 \description{
 Variance-Gamma (Bessel) kernel with bandwidth omega and shape parameter nu.ker
 }
-

@@ -1,10 +1,6 @@
 # Todo
 
-* Mingling
-* Mingling index
-* Simpson
 * Simpson index
-* Shannon
 * Shannon index
 * MCI
 * ISAR theo
@@ -13,5 +9,6 @@
 * maths vignette
 * other neighbourhoods
 
+* Mingling index, also knn @done
 * dixon test @done
 * example ISAR vignette @done

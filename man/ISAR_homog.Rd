@@ -21,4 +21,3 @@ Individual species-area-interaction or ISAR function
 \details{
 CSR mean everything is Poisson. Not usually a realistic model.
 }
-

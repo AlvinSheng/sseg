@@ -17,11 +17,11 @@ bwv <- c(seq(10, 500, length=50), 1000, 5000, 10000)
 #plot(bwv,p$err)
 
 #print( all.equal(p2$intensity_best, p$intensity_best) )
-l <- intensity_optimal(x, bwv, verb=T, scale=F)
+l <- intensity_optimal(x, bwv, verb=T)
 
 z <- x[x$marks=="TAB2AR"]
 
-p <- intensity_bandwidth_profile(z, bwv, scale=T)
+#p <- intensity_bandwidth_profile(z, bwv, scale=T)
 plot(bwv,p$err, log="y")
 plot(density(z, p$bw_best))
 points(z)

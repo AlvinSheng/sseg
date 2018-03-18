@@ -2,22 +2,21 @@
 % Please edit documentation in R/intensity.R
 \name{density_ppplist}
 \alias{density_ppplist}
-\title{Compute intensity surface for each component of multitype pattern}
+\title{Intensity Estimate for Ppp List}
 \usage{
-density_ppplist(x, sigma, ...)
+density_ppplist(xl, sigmas)
 }
 \arguments{
-\item{x}{a multitype pattern list}
+\item{xl}{list of ppp-objects}
 
-\item{...}{passed on to density.ppp}
+\item{sigmas}{vector of bandwidths, as in density.ppp (sd of kernel)}
 
-\item{bw}{the bandwidths, vector.}
+\item{...}{further arguments passed on to density.ppp}
 }
 \description{
-Compute intensity surface for each component of multitype pattern
+Intensity Estimate for Ppp List
 }
 \details{
-Uses density.ppp. Does what density.ppplist does but this one can take different bandwidths
-for different types.
+Wrapper for computing intensity estimates for a list of point patterns. Note that this is like
+\code{density.ppp} in spatstat except each pattern is assigned own bandwidth.
 }
-

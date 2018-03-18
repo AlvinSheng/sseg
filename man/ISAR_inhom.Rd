@@ -4,7 +4,7 @@
 \alias{ISAR_inhom}
 \title{Inhomogeneous ISAR}
 \usage{
-ISAR_inhom(x, i, r, intensity)
+ISAR_inhom(x, i, r, intensity, lambda = intensity, ...)
 }
 \arguments{
 \item{x}{Point pattern}
@@ -13,9 +13,12 @@ ISAR_inhom(x, i, r, intensity)
 
 \item{r}{r vector}
 
-\item{Intensity}{Intensity lambda_m(x) at each point (x,m)}
+\item{intensity}{Intensity lambda_m(x) at each point (x,m)}
+
+\item{lambda}{same as intensity}
+
+\item{...}{}
 }
 \description{
 Inhomogeneous ISAR
 }
-

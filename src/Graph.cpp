@@ -68,14 +68,13 @@ void Graph::sg_calc()
     edges_set = true;
   }
   //start the calculation
-       if(type == 1) {
-         if(edges_set) sg_sub_geometric(par[0]);
-         else sg_geometric();
-
-       }
+  if(type == 1) {
+    if(edges_set) sg_sub_geometric(par[0]);
+    else sg_geometric();
+  }
   else if(type == 2) {
-      if(edges_set) sg_sub_knn();
-      else sg_knn();
+    if(edges_set) sg_sub_knn();
+    else sg_knn();
   }
   else if(type == 3) sg_mass_geometric();
   else if(type == 4) sg_markcross();
@@ -124,19 +123,19 @@ void Graph::sg_sub_geometric(double R) // shrink
   double dist;
   std::vector<int> *node;
   for(i=0; i < pp->size() ; i++){
-      node = new std::vector<int>;
-      for(j=0;j < (int) this->edges[i].size() ; j++)
-      {
-        j0 = edges[i][j]-1;
-        dist = pp->getDist(&i,&j0);
-        if(dist < R)
-          node->push_back(j0+1);
-      }
-      edges[i].clear();edges[i].resize(0);
-      for (j = 0; j < (int)node->size(); ++j) this->edges[i].push_back(node->at(j));
-      delete node;
+    node = new std::vector<int>;
+    for(j=0;j < (int) this->edges[i].size() ; j++)
+    {
+      j0 = edges[i][j]-1;
+      dist = pp->getDist(&i,&j0);
+      if(dist < R)
+        node->push_back(j0+1);
     }
-    if(dbg)Rprintf(" ok.");
+    edges[i].clear();edges[i].resize(0);
+    for (j = 0; j < (int)node->size(); ++j) this->edges[i].push_back(node->at(j));
+    delete node;
+  }
+  if(dbg)Rprintf(" ok.");
 }
 
 /********************************************************************************************/
@@ -151,19 +150,19 @@ void Graph::sg_knn() {
 
   for(i=0;i<pp->size();i++){
 
-      for(j=0;j<pp->size();j++)
-        dists2_i2[j]=dists2_i[j]= pp->getDist(&i, &j); //gather the distances to others
+    for(j=0;j<pp->size();j++)
+      dists2_i2[j]=dists2_i[j]= pp->getDist(&i, &j); //gather the distances to others
 
-      qsort( dists2_i, pp->size(), sizeof(double), compare_doubles); // sort distances, rising
+    qsort( dists2_i, pp->size(), sizeof(double), compare_doubles); // sort distances, rising
 
-      for(j=1;j<=*k;j++) // find the k nearest
-        for(l=0;l<pp->size();l++)
-          if( dists2_i[j] == dists2_i2[l] ) //with distance comparison
-          {
-            edges[i].push_back(l+1);
-            break;
-          }
-    }
+    for(j=1;j<=*k;j++) // find the k nearest
+      for(l=0;l<pp->size();l++)
+        if( dists2_i[j] == dists2_i2[l] ) //with distance comparison
+        {
+          edges[i].push_back(l+1);
+          break;
+        }
+  }
   if(dbg)Rprintf(" Ok.");
 }
 
@@ -250,34 +249,34 @@ void Graph::sg_gabriel()
   double R2, d;
   std::vector<double> center(dim);
   for(i=0;i<(pp->size()-1);i++) {
-      for(j=i+1;j<pp->size();j++){
-        // center
-        for(k=0; k< dim;k++) {
-          center.at(k) = fabs(pp->getCoord(&i,&k)-pp->getCoord(&j,&k))/2.0+fmin(pp->getCoord(&i,&k),pp->getCoord(&j,&k));
-        }
-        R2 = pow(pp->getDist(&i, &j)/2,2);
-        //		brute force
-        empty = 1+kk;
-        for(k=0;k<pp->size();k++)
-        {
-          if(k != i)
-            if( k != j)
+    for(j=i+1;j<pp->size();j++){
+      // center
+      for(k=0; k< dim;k++) {
+        center.at(k) = fabs(pp->getCoord(&i,&k)-pp->getCoord(&j,&k))/2.0+fmin(pp->getCoord(&i,&k),pp->getCoord(&j,&k));
+      }
+      R2 = pow(pp->getDist(&i, &j)/2,2);
+      //		brute force
+      empty = 1+kk;
+      for(k=0;k<pp->size();k++)
+      {
+        if(k != i)
+          if( k != j)
+          {
+            d = 0;
+            for(l=0;l<dim;l++) d+= pow(center[l] - pp->getCoord(&k, &l), 2);
+            if( d<R2 )
             {
-              d = 0;
-              for(l=0;l<dim;l++) d+= pow(center[l] - pp->getCoord(&k, &l), 2);
-              if( d<R2 )
-              {
-                empty = empty - 1;
-                if(empty == 0) break;
-              }
+              empty = empty - 1;
+              if(empty == 0) break;
             }
-        }
-        if(empty)
-        {
-          this->edges[i].push_back(j+1);this->edges[j].push_back(i+1);
-        }
+          }
+      }
+      if(empty)
+      {
+        this->edges[i].push_back(j+1);this->edges[j].push_back(i+1);
       }
     }
+  }
   if(dbg)Rprintf(" Ok.");
 }
 
@@ -499,7 +498,7 @@ void Graph::sg_CCC()
             if(pp->getDist(&i, &j)< mass.at(i))
               addNew(i,j+1);
 
-  if(dbg) Rprintf(" Ok.");
+            if(dbg) Rprintf(" Ok.");
 }
 
 

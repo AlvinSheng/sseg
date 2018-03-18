@@ -9,4 +9,3 @@ parse_marks(x)
 \description{
 Parse marks of a point pattern
 }
-

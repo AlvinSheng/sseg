@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+tests/*
+^.*.rda$
+maths.*
+todo.md
+readme.md

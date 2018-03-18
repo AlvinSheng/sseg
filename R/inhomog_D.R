@@ -27,13 +27,14 @@ Dinhom <- function(x, r, intensity) {
   else if(is.numeric(intensity)){
     inf_int <- min(intensity)
   }
-  else stop("Can not interpert 'intensity'")
+  else stop("Can not interpret 'intensity'")
   # border
   bd <- bdist.points(x)
   #
   out <- Dinhom_c(coord, bbox, intensity, bd, inf_int, r)
   out <- 1-out
-  df <- data.frame(r=r, Dinhom=out)
+  df <- data.frame(r=r, inhD=out)
+
   out <- fv(df, valu = "inhD", desc = c("range", "Inhomogeneous nearest neighbour cdf"),
             ylab =  "inhD(r)" )
 }

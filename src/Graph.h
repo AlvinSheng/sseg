@@ -16,7 +16,7 @@ class Graph {
   NumericVector par;
 
 public:
-  std::vector<std::vector<int> > edges; // the edges
+  std::vector<std::vector<int> > edges; // the edges. NOTE 1-based indices!
 
   Graph(Pp pp, int type, NumericVector parameters, double);
   virtual ~Graph();

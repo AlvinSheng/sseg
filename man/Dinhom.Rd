@@ -16,4 +16,3 @@ Dinhom(x, r, intensity)
 \description{
 The same as spatstat's Ginhom with correction = "border"
 }
-

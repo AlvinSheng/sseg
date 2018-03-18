@@ -22,4 +22,3 @@ The tests are an improvement on the Pielou's test of segregation. The test is de
 Philip Dixon, "Testing spatial segregation using a nearest-neighbor contingency
 table", Ecology, 75, p.1940-1948 (1994).
 }
-

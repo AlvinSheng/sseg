@@ -11,4 +11,3 @@ rPSNC(rho, kappa, omega, alpha, win = owin(), clusters = NULL, nsim = 1,
 \description{
 Simulation of the PSNC as given by the authors
 }
-

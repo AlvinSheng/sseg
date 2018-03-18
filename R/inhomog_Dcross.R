@@ -16,7 +16,7 @@
 #' @useDynLib sseg
 #' @export
 
-Dinhom_cross<- function(x, r, intensity, i=1, j=2, v2=FALSE) {
+Dinhom_cross <- function(x, r, intensity, i=1, j=2, v2=FALSE) {
   from <- i
   to <- j
   if(!is.ppp(x)) stop("x should be a ppp object")

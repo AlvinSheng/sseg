@@ -9,4 +9,3 @@
 \description{
 Summary for intensity optimal stack
 }
-

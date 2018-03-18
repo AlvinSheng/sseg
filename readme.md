@@ -4,10 +4,9 @@ Emphasis on **multi**-type, more than 2.
 
 This is a reboot of the old `spatialsegregation` package originally conceived 2008. It doesn't have all the functionality yet, at the moment we have
 
-* Inhogeneous cross-type nearest neighbour cdf
-* ISAR
-* Inhomogeneous ISAR
-* Intensity bandwidth selection
+* (inhomogeneous) cross-type nearest neighbour cdf
+* (inhomogeneous) ISAR
+* Intensity estimation with automatic bandwidth selection
 * Dixon's test
 
 To install the vignette that demonstrates how to compute ISAR's install the package using

@@ -9,4 +9,3 @@ kernThomas(r, omega, ...)
 \description{
 Gaussian kernel with bandwidth omega
 }
-

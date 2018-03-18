@@ -4,16 +4,18 @@
 \alias{intensity_optimal}
 \title{Estimate the intensity at points using optimal bandwidth and within a type}
 \usage{
-intensity_optimal(x, verb = FALSE, ...)
+intensity_optimal(x, bwv, verb = FALSE, ..., border = "local")
 }
 \arguments{
 \item{x}{point pattern, ppp object}
 
+\item{bwv}{Vector of bandwidths to optimise over}
+
 \item{verb}{verbosity}
 
-\item{...}{passed on to \code{\link{intensity_bandwidth_profile}}}
+\item{...}{passed on to \code{\link{intensity_optimal_bw}} from package 'intensitybw'}
 
-\item{bwv}{Vector of bandwidths to optimise over}
+\item{border}{see \code{\link{intensity_at_points}}}
 }
 \value{
 A list with: a vector of intensities, one per point; the profiles; the best bandwidths.
@@ -22,10 +24,14 @@ A list with: a vector of intensities, one per point; the profiles; the best band
 Estimate the intensity at points using optimal bandwidth and within a type
 }
 \details{
-First, we split the pattern per type. Then we optimise the
-intensity using \code{\link{intensity_bandwidth_profile}}. Then
-we concatenate the estimates to a vector.
+First, we split the pattern per type.
+
+Then we optimise the
+kernel bandwidth using \code{\link{intensity_optimal_bw}}.
+
+Then we re-estimate with border correction.
+
+Finally, we concatenate the estimates to a vector.
 
 Caution: For a big pattern with many types this will take time.
 }
-

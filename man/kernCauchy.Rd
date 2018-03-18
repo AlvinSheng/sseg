@@ -9,4 +9,3 @@ kernCauchy(r, omega, ...)
 \description{
 Cauchy kernel with bandwith omega
 }
-

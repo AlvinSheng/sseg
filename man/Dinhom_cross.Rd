@@ -25,4 +25,3 @@ intensity could also be an im-object.
 Note the difference: The infimum needed for the estimator
 will be computed from the image, not just data locations.
 }
-

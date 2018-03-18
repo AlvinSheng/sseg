@@ -46,4 +46,3 @@ beobachtete Arten-Durchmischung. Forstwiss Centralbl, 116:129-139, 1997.
 Rajala, Illian: A family of spatial biodiversity measures based on graphs,
 Env. Ecol. Stat. 2012
 }
-
